@@ -129,6 +129,18 @@ a.button{
   flex-grow: 1;
 }
 
+/* Detail View */
+
+#inv-detail{
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  align-items: center;
+}
+
+
+/* Mobile Style Adjustments */
+
 @media screen and (min-width: 1000px) {
   body{
     max-width: 1000px;
@@ -138,5 +150,9 @@ a.button{
   }
   #upgrades-list, #main-review{
     max-width: 50%;
+  }
+  #inv-detail{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
   }
 }

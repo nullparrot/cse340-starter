@@ -65,18 +65,24 @@ Util.buildClassificationGrid = async function(data){
 
 Util.buildDetailView = async function(data){
   let print
+  const moneyFormetter = new Intl.NumberFormat('en-US',{
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0
+  })
+  const milesFormatter = new Intl.NumberFormat('en-US')
+
   if(data.length > 0){
     car = data[0]
     print = '<div id="inv-detail">'
-    print += '<h2>'+car.inv_make+' '+car.inv_model+'</h2>'
     print += '<img src="' + car.inv_image+'" alt="Image of '+ car.inv_make + ' ' + car.inv_model+' on CSE Motors" />'
     print += '<div id="inv-detail-breakdown">'
     print += '<p><strong>Make: </strong>'+car.inv_make+'</p>'
     print += '<p><strong>Model: </strong>'+car.inv_model+'</p>'
     print += '<p><strong>Year: </strong>'+car.inv_year+'</p>'
-    print += '<p><strong>Miles: </strong>'+car.inv_miles+'</p>'
+    print += '<p><strong>Miles: </strong>'+milesFormatter.format(car.inv_miles)+'</p>'
     print += '<p><strong>Color: </strong>'+car.inv_color+'</p>'
-    print += '<p><strong>Price: </strong>'+car.inv_price+'</p>'
+    print += '<p><strong>Price: </strong>'+moneyFormetter.format(car.inv_price)+'</p>'
     print += '<p>'+car.inv_description+'</p>'
     print += '</div>'
     print += '</div>'
