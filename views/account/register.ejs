@@ -5,7 +5,7 @@
   <% if (title) { %>
   <h1><%= title %></h1>
   <% } else { res.redirect('/') } %>
-  <form action="none" class="accountForm" id="registerForm">
+  <form action="/account/register" method="post" class="accountForm" id="registerForm">
     <p class="form-note">*Required</p>
     <label for="account_firstname">First Name*</label>
     <input type="text" name="account_firstname" id="account_firstname" />
