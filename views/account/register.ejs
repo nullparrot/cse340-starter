@@ -1,0 +1,24 @@
+<!-- Message Block -->
+<%# messages() %>
+
+<div class="accountBox" id="registerBox">
+  <% if (title) { %>
+  <h1><%= title %></h1>
+  <% } else { res.redirect('/') } %>
+  <form action="none" class="accountForm" id="registerForm">
+    <p class="form-note">*Required</p>
+    <label for="account_firstname">First Name*</label>
+    <input type="text" name="account_firstname" id="account_firstname" />
+    <label for="account_lastname">Last Name*</label>
+    <input type="text" name="account_lastname" id="account_lastname" />
+    <label for="account_email">Email*</label>
+    <input type="email" name="account_email" id="account_email" />
+    <label for="account_password">Password*</label>
+    <input type="password" name="account_password" id="account_password" />
+    <p class="form-note">
+      Password must be at least 12 characters and include at least one of each:
+      uppercase letter, number, and special character.
+    </p>
+    <button>Register</button>
+  </form>
+</div>
