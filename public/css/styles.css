@@ -152,22 +152,27 @@ a.button {
   margin: 0 auto;
 }
 
-.accountForm{
+.accountForm {
   display: flex;
   flex-direction: column;
 }
 
-.accountForm button{
+.accountForm button {
   max-width: min-content;
   align-self: center;
 }
 
-.accountForm input{
+.accountForm input {
   margin: 2px 0 3px;
 }
 
-.form-note{
+.form-note {
   color: darkred;
+}
+
+input:required:invalid,
+input:focus:invalid {
+  border: darkred 2px solid;
 }
 
 /* Mobile Style Adjustments */

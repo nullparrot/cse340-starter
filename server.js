@@ -13,9 +13,10 @@ const utilities = require("./utilities")
 const static = require("./routes/static")
 const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute")
-const accountsRoute = require("./routes/accountsRoute")
+const accountsRoute = require("./routes/accountRoute")
 const session = require("express-session")
 const pool = require('./database/')
+const bodyParser = require("body-parser")
 
 /* ***********************
  * Middleware
@@ -38,6 +39,9 @@ app.use(function(req, res, next){
   next()
 })
 
+// Parsing Middleware
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
 /* ***********************
  * View Engine and Templates

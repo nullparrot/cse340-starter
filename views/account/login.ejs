@@ -1,5 +1,5 @@
 <!-- Message Block -->
-<%# messages() %>
+<%- messages() %>
 
 <div class="accountBox" id="loginBox">
   <% if (title) { %>
@@ -7,9 +7,12 @@
   <% } else { res.redirect('/') } %>
   <form action="none" class="accountForm" id="loginForm">
     <label for="account_email">Email</label>
-    <input type="email" name="account_email" id="account_email" />
+    <input type="email" name="account_email" id="account_email" required>
     <label for="account_password">Password</label>
-    <input type="password" name="account_password" id="account_password" />
+    <input type="password" name="account_password" id="account_password" required>
+    <p class="form-note">
+        Passwords must be at least 12 characters and contain at least 1 number, 1 capital letter and 1 special character
+    </p>
     <button>Login</button>
   </form>
   <p>No account? <a href="/account/register">Sign-up</a></p>
