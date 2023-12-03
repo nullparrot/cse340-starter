@@ -88,6 +88,31 @@ Util.buildDetailView = async function(data){
   return print
 }
 
+/* **************************************
+* Build the classification selector
+* ************************************ */
+Util.buildClassificationSelector = async function(classification_id){
+  let classifications = await invModel.getClassifications()
+  let selector = ''
+  console.log(classification_id)
+  if (classification_id != 'undefined') {
+    selector = `<label for="classification_id">Classification</label><select name="classification_id" id="classification_id" required value="${classification_id}"><option value="" disabled>Select an option</option>`
+  } else{
+    selector = '<label for="classification_id">Classification</label><select name="classification_id" id="classification_id" required><option value="" disabled selected>Select an option</option>'
+  }
+  classifications.rows.forEach((row) => {
+    selector += '<option value= "'+row.classification_id+'"'
+    if (classification_id == row.classification_id){
+      selector += ' selected'
+    }
+    selector+= '>'
+    selector += row.classification_name
+    selector += "</option>"
+  })
+  selector += "</select>"
+  return selector
+}
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 

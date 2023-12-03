@@ -1,13 +1,19 @@
-<!-- Message Block -->
-<%- messages() %>
-
 <div class="accountBox" id="loginBox">
   <% if (title) { %>
   <h1><%= title %></h1>
   <% } else { res.redirect('/') } %>
-  <form action="none" class="accountForm" id="loginForm">
+  <!-- Message Block -->
+  <%- messages() %>
+  <% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+  <% } %>
+  <form action="/account/login" method="post" class="accountForm" id="loginForm">
     <label for="account_email">Email</label>
-    <input type="email" name="account_email" id="account_email" required>
+    <input type="email" name="account_email" id="account_email" required value="<%= locals.account_email %>">
     <label for="account_password">Password</label>
     <input type="password" name="account_password" id="account_password" required>
     <p class="form-note">

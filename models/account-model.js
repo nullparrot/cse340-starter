@@ -1,6 +1,31 @@
 const pool = require("../database")
 
 /* *****************************
+*   Login to account
+* *************************** */
+async function loginAccount(account_email, account_password){
+  try {
+    const sql = "SELECT account_firstname, account_lastname, account_email, account_type FROM account WHERE account_email=$1 AND account_password=$2"
+    return await pool.query(sql, [account_email, account_password])
+  } catch (error) {
+    return error.message
+  }
+}
+
+/* *****************************
+*   Check Password
+* *************************** */
+async function checkExistingPassword(account_password){
+  try {
+    const sql = "SELECT account_type FROM account WHERE account_email=$1 AND account_password=$2"
+    const exists =  await pool.query(sql, [account_password])
+    return exists.rows[0]
+  } catch (error) {
+    return error.message
+  }
+}
+
+/* *****************************
 *   Register new account
 * *************************** */
 async function registerAccount(account_firstname, account_lastname, account_email, account_password){
@@ -25,4 +50,4 @@ async function checkExistingEmail(account_email){
   }
 }
 
-module.exports = { registerAccount, checkExistingEmail}
+module.exports = { loginAccount, checkExistingPassword, registerAccount, checkExistingEmail}
