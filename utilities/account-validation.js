@@ -97,7 +97,7 @@ validate.loginRules = (account_email, account_password) => {
     ];
   };
 
-validate.checkAccountLogin = async (req, res, next) => {
+validate.checkLoginData = async (req, res, next) => {
   const { account_email } = req.body;
   let errors = [];
   errors = validationResult(req);

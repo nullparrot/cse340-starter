@@ -45,6 +45,28 @@ router.post(
   utilities.handleErrors(invController.addInventory)
 );
 
+//Route to pass through inventory data
+router.get(
+  "/getInventory/:classification_id",
+  utilities.handleErrors(invController.getInventoryJSON)
+);
+
+//Route to edit inventory item
+router.get(
+  "/edit/:inv_id",
+  utilities.handleErrors(invController.editInventoryView)
+)
+
+//Route to handle inventory update form
+router.post(
+  "/update/",
+  invValidate.newInventoryRules(),
+  invValidate.checkUpdateData,
+  utilities.handleErrors(invController.updateInventory)
+  )
+
+
+
 //Route to build managment view
 router.get("", utilities.handleErrors(invController.buildManagment));
 
