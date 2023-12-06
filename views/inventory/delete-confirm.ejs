@@ -1,0 +1,61 @@
+<!-- Message Block -->
+<%- messages() %> <% if (errors) { %>
+    <ul class="notice">
+      <% errors.array().forEach(error => { %>
+      <li><%= error.msg %></li>
+      <% }) %>
+    </ul>
+    <% } %>
+    
+    <!-- Page Content -->
+    <div class="accountBox">
+      <!-- Content Header -->
+      <% if (title) { %>
+      <h1><%= title %></h1>
+      <% } else { res.redirect('/') } %>
+      <p>Confirm Deletion - The delete is permanent.</p>
+      <form action="/inv/delete" method="post" class="accountForm" id="deleteForm">
+        <label for="inv_make">Make</label>
+        <input readonly
+          type="text"
+          name="inv_make"
+          id="inv_make"
+          required
+          pattern="[A-z0-9 ]+"
+          value="<%= locals.inv_make %>"
+        />
+        <label for="inv_model">Model</label>
+        <input readonly
+          type="text"
+          name="inv_model"
+          id="inv_model"
+          required
+          pattern="[A-z0-9 ]+"
+          value="<%= locals.inv_model %>"
+        />
+        <label for="inv_year">Year</label>
+        <input readonly
+          type="text"
+          name="inv_year"
+          id="inv_year"
+          required
+          pattern="[0-9]{4}"
+          value="<%= locals.inv_year %>"
+        />
+        <label for="inv_price">Price</label>
+        <input readonly
+          type="text"
+          name="inv_price"
+          id="inv_price"
+          required
+          pattern="[0-9]+"
+          value="<%= locals.inv_price %>"
+        />
+        <button type="submit">Delete Vehicle</button>
+        <input readonly type="hidden" name="inv_id" id="inv_id"
+        <% if(locals.inv_id) { %> value="<%=locals.inv_id %>"
+        <% } %>>
+      </form>
+    </div>
+    <!-- <script src="../../js/inv-delete.js"></script> -->
+    

@@ -41,7 +41,7 @@ invCont.buildByInventoryId = async function (req, res, next) {
  * *************************************** */
 invCont.buildManagment = async function (req, res, next) {
   let nav = await utilities.getNav();
-  const classificationSelector = await utilities.buildClassificationSelector()
+  let classificationSelector = await utilities.buildClassificationSelector()
   res.render("./inventory/management", {
     title: "Inventory Management",
     nav,
@@ -68,7 +68,6 @@ invCont.addClassification = async function (req, res) {
   const addClassResult = await invModel.addClassification(classification_name);
   let nav = await utilities.getNav();
   if (addClassResult) {
-    console.log(addClassResult);
     req.flash("notice", `New Classification "${classification_name}" added.`);
     res.status(201).render("./inventory/management", {
       title: "Inventory Managment",
@@ -128,17 +127,16 @@ invCont.addInventory = async function (req, res, next) {
     inv_color
   );
   let nav = await utilities.getNav();
+  let classificationSelector = await utilities.buildClassificationSelector()
   if (addInventoryResult) {
-    console.log(addInventoryResult);
     req.flash("notice", `${inv_make} ${inv_model} added to inventory.`);
-    res.status(201).render("./inventory/management", {
+    res.status(201).render("inventory/management", {
       title: "Inventory Managment",
       nav,
-      errors: null,
+      errors: null, classificationSelector
     });
   } else {
     req.flash("notice", "Sorry, adding the vehicle to inventory failed.");
-    let classificationSelector = await utilities.buildClassificationSelector(classification_id);
     res
       .status(501)
       .res.render("inventory/add-inventory", {
@@ -180,10 +178,8 @@ invCont.editInventoryView = async function (req, res, next) {
   const inv_id = parseInt(req.params.inv_id)
   let nav = await utilities.getNav()
   const itemData = (await invModel.getDetailByInventoryId(inv_id))[0]
-  const classificationSelector = await utilities.buildClassificationSelector(itemData.classification_id)
+  let classificationSelector = await utilities.buildClassificationSelector(itemData.classification_id)
   const itemName = `${itemData.inv_make} ${itemData.inv_model}`
-  console.log(itemData)
-  console.log(itemData.inv_miles)
   res.render("./inventory/edit-inventory", {
     title: "Edit " + itemName,
     nav,
@@ -259,6 +255,63 @@ invCont.updateInventory = async function (req, res, next) {
     inv_miles,
     inv_color,
     classification_id
+    })
+  }
+}
+
+/* ***************************
+ *  Build Delete Confirmation view
+ * ************************** */
+invCont.deleteConfirmView = async function (req, res, next) {
+  const inv_id = parseInt(req.params.inv_id)
+  let nav = await utilities.getNav()
+  const itemData = (await invModel.getDetailByInventoryId(inv_id))[0]
+  const itemName = `${itemData.inv_make} ${itemData.inv_model}`
+  res.render("./inventory/delete-confirm", {
+    title: " Delete " + itemName,
+    nav,
+    errors: null,
+    inv_id: itemData.inv_id,
+    inv_make: itemData.inv_make,
+    inv_model: itemData.inv_model,
+    inv_year: itemData.inv_year,
+    inv_price: itemData.inv_price,
+    inv_miles: itemData.inv_miles,
+  })
+}
+
+/* ***************************
+ *  Delete Inventory Data
+ * ************************** */
+invCont.deleteInventory = async function (req, res, next) {
+  let nav = await utilities.getNav()
+  const {
+    inv_id,
+    inv_make,
+    inv_model,
+    inv_year,
+  } = req.body
+  const itemName = `${inv_make} ${inv_model}`
+  const deleteResult = await invModel.deleteInventoryItem(
+    inv_id
+  )
+
+  if (deleteResult) {
+    req.flash("notice", `The vehicle was successfully removed.`)
+    res.redirect("/inv/")
+  } else {
+    const classificationSelect = await utilities.buildClassificationList(classification_id)
+    const itemName = `${inv_make} ${inv_model}`
+    req.flash("notice", "Sorry, the delete failed.")
+    res.status(501).render("inventory/delete-confirm", {
+    title: "Delete " + itemName,
+    nav,
+    classificationSelect: classificationSelect,
+    errors: null,
+    inv_id,
+    inv_make,
+    inv_model,
+    inv_year,
     })
   }
 }

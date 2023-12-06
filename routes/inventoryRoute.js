@@ -65,7 +65,17 @@ router.post(
   utilities.handleErrors(invController.updateInventory)
   )
 
+//Route to show delete confirmation view
+router.get(
+  "/delete/:inv_id",
+  utilities.handleErrors(invController.deleteConfirmView)
+)
 
+//Route to delete inventory item
+router.post(
+  "/delete/",
+  utilities.handleErrors(invController.deleteInventory)
+)
 
 //Route to build managment view
 router.get("", utilities.handleErrors(invController.buildManagment));
