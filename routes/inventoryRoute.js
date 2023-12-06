@@ -19,13 +19,13 @@ router.get(
 
 //Route to New Classification View
 router.get(
-  "/add-classification",
+  "/add-classification",utilities.checkLogin,
   utilities.handleErrors(invController.buildNewClassification)
 );
 
 //Route to process New Classification
 router.post(
-  "/add-classification",
+  "/add-classification",utilities.checkLogin,
   invValidate.classificationRules(),
   invValidate.checkClassification,
   utilities.handleErrors(invController.addClassification)
@@ -33,13 +33,13 @@ router.post(
 
 //Route to New Classification View
 router.get(
-  "/add-inventory",
+  "/add-inventory",utilities.checkLogin,
   utilities.handleErrors(invController.buildNewInventory)
 );
 
 //Route to process New Inventory
 router.post(
-  "/add-inventory",
+  "/add-inventory",utilities.checkLogin,
   invValidate.inventoryRules(),
   invValidate.checkInventory,
   utilities.handleErrors(invController.addInventory)
@@ -53,13 +53,13 @@ router.get(
 
 //Route to edit inventory item
 router.get(
-  "/edit/:inv_id",
+  "/edit/:inv_id",utilities.checkLogin,
   utilities.handleErrors(invController.editInventoryView)
 )
 
 //Route to handle inventory update form
 router.post(
-  "/update/",
+  "/update/",utilities.checkLogin,
   invValidate.newInventoryRules(),
   invValidate.checkUpdateData,
   utilities.handleErrors(invController.updateInventory)
@@ -67,17 +67,17 @@ router.post(
 
 //Route to show delete confirmation view
 router.get(
-  "/delete/:inv_id",
+  "/delete/:inv_id",utilities.checkLogin,
   utilities.handleErrors(invController.deleteConfirmView)
 )
 
 //Route to delete inventory item
 router.post(
-  "/delete/",
+  "/delete/",utilities.checkLogin,
   utilities.handleErrors(invController.deleteInventory)
 )
 
 //Route to build managment view
-router.get("", utilities.handleErrors(invController.buildManagment));
+router.get("",utilities.checkLogin, utilities.handleErrors(invController.buildManagment));
 
 module.exports = router;
