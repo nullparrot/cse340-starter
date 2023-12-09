@@ -50,6 +50,7 @@ header a {
 #tools {
   grid-column: 2/3;
   grid-row: 1;
+  text-align: right;
 }
 
 /* Navigation Style */
