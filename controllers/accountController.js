@@ -23,7 +23,6 @@ async function accountLogin(req, res) {
   let nav = await utilities.getNav();
   const { account_email, account_password } = req.body;
   const accountData = await accountModel.getAccountByEmail(account_email);
-  console.log(accountData)
   if (!accountData) {
     req.flash("notice", "Please check your credentials and try again.");
     res.status(400).render("account/login", {
@@ -43,7 +42,6 @@ async function accountLogin(req, res) {
         { expiresIn: 3600 * 1000 }
       );
       res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 });
-      console.log('Logged in - made a cookie')
       return res.redirect("/account/");
     }
   } catch (error) {
@@ -143,8 +141,138 @@ async function buildManagement(req, res, next) {
   res.render("account/management", {
     title: "Account Management",
     nav,
-    errors: null,classificationSelector
+    errors: null
   });
+}
+
+
+/**
+ * Account Update View
+ */
+
+async function buildAccountUpdate(req, res, next) {
+  const account_id = parseInt(req.params.account_id)
+  const accountData = await accountModel.getAccountById(account_id);
+
+  let nav = await utilities.getNav();
+  res.render("account/update-account", {
+    title: "Update Account",
+    nav,
+    errors: null,
+    account_id,
+    account_firstname: accountData["account_firstname"],
+    account_lastname: accountData["account_lastname"],
+    account_email: accountData["account_email"]
+  });
+}
+
+/* ****************************************
+ *  Process Update
+ * *************************************** */
+async function updateAccount(req, res) {
+  let nav = await utilities.getNav();
+  const {
+    account_firstname,
+    account_lastname,
+    account_email,
+    account_id,
+  } = req.body;
+
+  const updateResult = await accountModel.updateAccount(
+    account_firstname,
+    account_lastname,
+    account_email,
+    account_id,
+  );
+
+  if (updateResult) {
+    req.flash(
+      "notice",
+      `Account details succesfully updated.`
+    );
+    res.status(201).redirect("/account");
+  } else {
+    req.flash("notice", "Sorry, the changes failed. Please try again.");
+    res.status(501).render("account/update-account", {
+      title: "Update Account",
+      nav,
+      errors: null,
+      account_firstname,
+      account_lastname,
+      account_email,
+      account_id
+    });
+  }
+}
+
+/* ****************************************
+ *  Process New Passowrd
+ * *************************************** */
+async function newPassword(req, res) {
+  let nav = await utilities.getNav();
+  const {
+    account_id,
+    account_password,
+  } = req.body;
+
+  // Hash the password before storing
+  let hashedPassword;
+  try {
+    // regular password and cost (salt is generated automatically)
+    hashedPassword = await bcrypt.hashSync(account_password, 10);
+  } catch (error) {
+    const currAccountInfo = await accountModel.getAccountById(account_id)
+    req.flash(
+      "notice",
+      "Sorry, there was an error changing your password."
+    );
+    res.status(500).render(`account/update-account`, {
+      errors,
+      title: "Update Account",
+      nav,
+      account_firstname: currAccountInfo["account_firstname"],
+      account_lastname: currAccountInfo["account_lastname"],
+      account_email: currAccountInfo["account_email"],
+      account_id
+    });
+  }
+
+  const newPassResult = await accountModel.newPassword(
+    account_id,
+    hashedPassword
+  );
+
+  if (newPassResult) {
+    req.flash(
+      "notice",
+      `Your password has been updated.`
+    );
+    res.status(201).redirect("/account");
+  } else {
+    const currAccountInfo = await accountModel.getAccountById(account_id)
+    req.flash(
+      "notice",
+      "Sorry, there was an error changing your password."
+    );
+    res.status(501).render(`account/update-account`, {
+      errors,
+      title: "Update Account",
+      nav,
+      account_firstname: currAccountInfo["account_firstname"],
+      account_lastname: currAccountInfo["account_lastname"],
+      account_email: currAccountInfo["account_email"],
+      account_id
+    });
+  }
+}
+
+async function logout(req, res){
+  res.cookie("jwt","",{ maxAge: 0 })
+  req.flash(
+    "notice",
+    "Succesfully logged out."
+  );
+  res.redirect("/")
 }
 
 module.exports = {
@@ -153,4 +281,8 @@ module.exports = {
   buildRegister,
   registerAccount,
   buildManagement,
+  buildAccountUpdate,
+  updateAccount,
+  newPassword,
+  logout
 };

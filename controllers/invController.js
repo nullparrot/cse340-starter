@@ -69,11 +69,7 @@ invCont.addClassification = async function (req, res) {
   let nav = await utilities.getNav();
   if (addClassResult) {
     req.flash("notice", `New Classification "${classification_name}" added.`);
-    res.status(201).render("./inventory/management", {
-      title: "Inventory Managment",
-      nav,
-      errors: null,
-    });
+    res.redirect("/inv/")
   } else {
     req.flash("notice", "Sorry, adding the classification failed.");
     res.status(501).render("inventory/add-classification", {
@@ -130,11 +126,7 @@ invCont.addInventory = async function (req, res, next) {
   let classificationSelector = await utilities.buildClassificationSelector()
   if (addInventoryResult) {
     req.flash("notice", `${inv_make} ${inv_model} added to inventory.`);
-    res.status(201).render("inventory/management", {
-      title: "Inventory Managment",
-      nav,
-      errors: null, classificationSelector
-    });
+    res.redirect("/inv/")
   } else {
     req.flash("notice", "Sorry, adding the vehicle to inventory failed.");
     res

@@ -23,7 +23,7 @@
           required
           pattern="[A-z0-9 ]+"
           value="<%= locals.inv_make %>"
-        />
+        >
         <label for="inv_model">Model</label>
         <input readonly
           type="text"
@@ -32,7 +32,7 @@
           required
           pattern="[A-z0-9 ]+"
           value="<%= locals.inv_model %>"
-        />
+        >
         <label for="inv_year">Year</label>
         <input readonly
           type="text"
@@ -41,7 +41,7 @@
           required
           pattern="[0-9]{4}"
           value="<%= locals.inv_year %>"
-        />
+        >
         <label for="inv_price">Price</label>
         <input readonly
           type="text"
@@ -50,7 +50,7 @@
           required
           pattern="[0-9]+"
           value="<%= locals.inv_price %>"
-        />
+        >
         <button type="submit">Delete Vehicle</button>
         <input readonly type="hidden" name="inv_id" id="inv_id"
         <% if(locals.inv_id) { %> value="<%=locals.inv_id %>"

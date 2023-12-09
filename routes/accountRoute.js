@@ -28,6 +28,34 @@ router.post(
   regValidate.loginRules(),
   regValidate.checkLoginData,
   utilities.handleErrors(accountsController.accountLogin)
+);
+
+//Route to build account update page
+router.get(
+  "/update/:account_id",
+  utilities.handleErrors(accountsController.buildAccountUpdate)
+);
+
+// Process the account update request
+router.post(
+  "/update/:account_id",
+  regValidate.updateAccountRules(),
+  regValidate.checkUpdateAccountData,
+  utilities.handleErrors(accountsController.updateAccount)
+);
+
+//Process the password update request
+router.post(
+  "/newPassword",
+  regValidate.newPasswordRules(),
+  regValidate.checkPasswordData,
+  utilities.handleErrors(accountsController.newPassword)
+);
+
+//Process the logout request and redirect to home
+router.get(
+  "/logout",
+  utilities.handleErrors(accountsController.logout)
 )
 
 //Default Route

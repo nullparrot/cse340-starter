@@ -130,7 +130,7 @@ Util.buildClassificationSelector = async function (classification_id) {
   let classifications = await invModel.getClassifications();
   let selector = "";
   if (classification_id != "undefined") {
-    selector = `<label for="classification_id">Classification</label><select name="classification_id" id="classification_id" required value="${classification_id}"><option value="" disabled>Select an option</option>`;
+    selector = `<label for="classification_id">Classification</label><select name="classification_id" id="classification_id" required><option value="" disabled>Select an option</option>`;
   } else {
     selector =
       '<label for="classification_id">Classification</label><select name="classification_id" id="classification_id" required><option value="" disabled selected>Select an option</option>';

@@ -11,7 +11,7 @@ validate.classificationRules = () => {
       // valid classification name is 3+ characters and only letters
     body("classification_name")
     .trim()
-    .matches(/[A-z]{3,}/)
+    .matches(/^[A-z]{3,}$/)
     .withMessage("Classification Name should be at least three chracters long and include only letters.")
     .custom(async (classification_name) => {
       const classificationExists = await inventoryModel.checkExistingClassification(

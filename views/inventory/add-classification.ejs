@@ -16,7 +16,7 @@
   <% } else { res.redirect('/') } %>
   <form action="/inv/add-classification" method="post" class="accountForm" id="classificationForm">
     <label for="classification_name">Classification Name</label>
-    <input type="text" name="classification_name" id="classification_name" required pattern="[A-z]{3,}" value="<%= locals.classification_name %>"/>
+    <input type="text" name="classification_name" id="classification_name" required pattern="[A-z]{3,}" value="<%= locals.classification_name %>">
     <button>Add</button>
   </form>
 </div>

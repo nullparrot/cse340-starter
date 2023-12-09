@@ -23,7 +23,7 @@
       required
       pattern="[A-z0-9 ]+"
       value="<%= locals.inv_make %>"
-    />
+    >
     <label for="inv_model">Model</label>
     <input
       type="text"
@@ -32,7 +32,7 @@
       required
       pattern="[A-z0-9 ]+"
       value="<%= locals.inv_model %>"
-    />
+    >
     <label for="inv_year">Year</label>
     <input
       type="text"
@@ -41,7 +41,7 @@
       required
       pattern="[0-9]{4}"
       value="<%= locals.inv_year %>"
-    />
+    >
     <label for="inv_description">Description</label>
     <input
       type="text"
@@ -49,7 +49,7 @@
       id="inv_description"
       required
       value="<%= locals.inv_description %>"
-    />
+    >
     <label for="inv_image">Image Path</label>
     <input
       type="text"
@@ -57,7 +57,7 @@
       id="inv_image"
       required
       value="<%= locals.inv_image %>"
-    />
+    >
     <label for="inv_thumbnail">Thumbnail Path</label>
     <input
       type="text"
@@ -65,7 +65,7 @@
       id="inv_thumbnail"
       required
       value="<%= locals.inv_thumbnail %>"
-    />
+    >
     <label for="inv_price">Price</label>
     <input
       type="text"
@@ -74,7 +74,7 @@
       required
       pattern="[0-9]+"
       value="<%= locals.inv_price %>"
-    />
+    >
     <label for="inv_miles">Miles</label>
     <input
       type="text"
@@ -83,7 +83,7 @@
       required
       pattern="[0-9]+"
       value="<%= locals.inv_miles %>"
-    />
+    >
     <label for="inv_color">Color</label>
     <input
       type="text"
@@ -92,7 +92,7 @@
       required
       pattern="[A-z ]{3,}"
       value="<%= locals.inv_color %>"
-    />
+    >
     <button disabled type="submit">Update Vehicle</button>
     <input type="hidden" name="inv_id"
     <% if(locals.inv_id) { %> value="<%=locals.inv_id %>"
