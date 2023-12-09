@@ -69,6 +69,17 @@ async function checkExistingClassificationId(classification_id) {
   }
 }
 
+async function getClassificationById(classification_id) {
+  try {
+    const sql = "SELECT classification_name FROM classification WHERE classification_id = $1";
+    const classification = await pool.query(sql, [classification_id]);
+    console.log(classification)
+    return classification.rows;
+  } catch (error) {
+    return error.message;
+  }
+}
+
 async function addClassification(classification_name) {
   try {
     const sql =
@@ -189,6 +200,7 @@ module.exports = {
   getDetailByInventoryId,
   checkExistingClassification,
   checkExistingClassificationId,
+  getClassificationById,
   addClassification,
   addInventory,updateInventory,deleteInventoryItem,getInventoryBySearchTerm
 };

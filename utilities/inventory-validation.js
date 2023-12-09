@@ -193,4 +193,31 @@ validate.checkUpdateData = async (req, res, next) => {
   next();
 };
 
+/*  **********************************
+ *  Search Validation Rules
+ * ********************************* */
+validate.searchRules = () => {
+  return [
+    // valid classification name is 3+ characters and only letters
+  body("search_term")
+  .trim()
+  .isLength({min:1})
+  .withMessage("Unable to complete search. A search must contain at least one letter or number.")
+  .matches(/^[A-z0-9 ]{3,}$/)
+  .withMessage("Unable to complete search. A search can only contain letters, numbers, or space."),
+  ];
+};
+
+validate.checkSearch = async (req, res, next) => {
+const { search_term } = req.body;
+let errors = [];
+errors = validationResult(req);
+if (!errors.isEmpty()) {
+  let nav = await utilities.getNav();
+  res.render("inventory/search", { errors, title: `Search results for '${search_term}'`, nav, grid:null});
+  return;
+}
+next();
+};
+
 module.exports = validate;

@@ -4,6 +4,7 @@ const router = new express.Router();
 const utilities = require("../utilities");
 const invController = require("../controllers/invController");
 const invValidate = require("../utilities/inventory-validation");
+const validate = require("../utilities/inventory-validation");
 
 // Route to build inventory by classification view
 router.get(
@@ -80,6 +81,8 @@ router.post(
 //Route
 router.post(
   "/search/",
+  validate.searchRules(),
+  validate.checkSearch,
   utilities.handleErrors(invController.buildBySearchTerm)
 )
 

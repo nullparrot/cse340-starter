@@ -11,9 +11,20 @@ invCont.buildByClassificationId = async function (req, res, next) {
   const data = await invModel.getInventoryByClassificationId(classification_id);
   const grid = await utilities.buildClassificationGrid(data);
   let nav = await utilities.getNav();
-  const className = data[0].classification_name;
+  console.log(data)
+  let className = ""
+  if (data.length > 0){
+    className = data[0].classification_name;
+  } else{
+    try{
+      classData = await invModel.getClassificationById(classification_id)
+      className = classData.classification_name;
+    } catch {
+      className = ""
+    }
+  }
   res.render("./inventory/classification", {
-    title: className + " vehicles",
+    title: className + " Vehicles",
     nav,
     grid,
   });
@@ -316,11 +327,11 @@ invCont.buildBySearchTerm = async function (req, res, next) {
   const data = await invModel.getInventoryBySearchTerm(search_term);
   const grid = await utilities.buildClassificationGrid(data);
   let nav = await utilities.getNav();
-  console.log(data)
   res.render("./inventory/search", {
-    title: `Results for '${search_term}'`,
+    title: `Search results for '${search_term}'`,
     nav,
-    grid,
+    grid: grid,
+    errors:null
   });
 };
 
