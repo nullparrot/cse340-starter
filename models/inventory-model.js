@@ -162,6 +162,27 @@ async function deleteInventoryItem(inv_id) {
   }
 }
 
+/* ***************************
+ *  Get all inventory items and classification_name by search
+ * ************************** */
+async function getInventoryBySearchTerm(search_term) {
+  try {
+    const data = await pool.query(
+      `SELECT * FROM public.inventory AS i 
+        JOIN public.classification AS c 
+        ON i.classification_id = c.classification_id 
+        WHERE LOWER(c.classification_name) LIKE $1
+        OR LOWER(i.inv_make) LIKE $1
+        OR LOWER(i.inv_model) LIKE $1
+        OR LOWER(i.inv_description) LIKE $1`,
+      ['%'+search_term.toLowerCase()+'%']
+    );
+    return data.rows;
+  } catch (error) {
+    console.error("getclassificationsbyid error " + error);
+  }
+}
+
 module.exports = {
   getClassifications,
   getInventoryByClassificationId,
@@ -169,5 +190,5 @@ module.exports = {
   checkExistingClassification,
   checkExistingClassificationId,
   addClassification,
-  addInventory,updateInventory,deleteInventoryItem
+  addInventory,updateInventory,deleteInventoryItem,getInventoryBySearchTerm
 };

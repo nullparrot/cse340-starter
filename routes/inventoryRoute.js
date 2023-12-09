@@ -77,6 +77,12 @@ router.post(
   utilities.handleErrors(invController.deleteInventory)
 )
 
+//Route
+router.post(
+  "/search/",
+  utilities.handleErrors(invController.buildBySearchTerm)
+)
+
 //Route to build managment view
 router.get("",utilities.checkLogin, utilities.handleErrors(invController.buildManagment));
 

@@ -308,4 +308,20 @@ invCont.deleteInventory = async function (req, res, next) {
   }
 }
 
+/* ***************************
+ *  Build inventory by search term
+ * ************************** */
+invCont.buildBySearchTerm = async function (req, res, next) {
+  const { search_term } = req.body;
+  const data = await invModel.getInventoryBySearchTerm(search_term);
+  const grid = await utilities.buildClassificationGrid(data);
+  let nav = await utilities.getNav();
+  console.log(data)
+  res.render("./inventory/search", {
+    title: `Results for '${search_term}'`,
+    nav,
+    grid,
+  });
+};
+
 module.exports = invCont;
