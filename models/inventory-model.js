@@ -185,7 +185,9 @@ async function getInventoryBySearchTerm(search_term) {
         WHERE LOWER(c.classification_name) LIKE $1
         OR LOWER(i.inv_make) LIKE $1
         OR LOWER(i.inv_model) LIKE $1
-        OR LOWER(i.inv_description) LIKE $1`,
+        OR LOWER(i.inv_description) LIKE $1
+        OR i.inv_year LIKE $1
+        OR LOWER(i.inv_color) LIKE $1`,
       ['%'+search_term.toLowerCase()+'%']
     );
     return data.rows;

@@ -203,7 +203,7 @@ validate.searchRules = () => {
   .trim()
   .isLength({min:1})
   .withMessage("Unable to complete search. A search must contain at least one letter or number.")
-  .matches(/^[A-z0-9 ]{3,}$/)
+  .matches(/^[A-z0-9 ]+$/)
   .withMessage("Unable to complete search. A search can only contain letters, numbers, or space."),
   ];
 };

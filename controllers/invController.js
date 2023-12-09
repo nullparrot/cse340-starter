@@ -18,7 +18,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
   } else{
     try{
       classData = await invModel.getClassificationById(classification_id)
-      className = classData.classification_name;
+      className = classData[0].classification_name;
     } catch {
       className = ""
     }
