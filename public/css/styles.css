@@ -192,7 +192,9 @@ a.button {
 }
 
 input:required:invalid,
-input:focus:invalid {
+input:focus:invalid,
+textarea:required:invalid,
+textarea:focus:invalid {
   border: darkred 2px solid;
 }
 
