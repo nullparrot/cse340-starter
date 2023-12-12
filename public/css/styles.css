@@ -199,6 +199,10 @@ textarea:focus:invalid {
   border: darkred 2px solid;
 }
 
+#search_term, #search_term:invalid {
+  border: darkgray 2px solid;
+}
+
 .formBoxes {
   display: flex;
   flex-direction: row;
