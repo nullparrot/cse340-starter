@@ -157,6 +157,7 @@ a.button {
   grid-template-columns: 1fr;
   justify-items: center;
   align-items: center;
+  max-width: 90%;
 }
 
 /* Login View */
